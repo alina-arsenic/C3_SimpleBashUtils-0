@@ -6,25 +6,29 @@
 
 void file_output(FILE *file, int* options, int* lastLineBlank, int* lineNumber);
 void get_options(int *options, int argc, char **argv);
+void get_files(char **files, int* n, int argc, char **argv);
 
 int main(int argc, char **argv) {
 
     int options[5];
     get_options(options, argc, argv);
 
+    int files_count = 0;
+    char *files[argc];
+    get_files(files, &files_count, argc, argv);
+
     int lastLineBlank = 0, lineNumber = 1;
-    if (argc == 1) {
+    if (files_count == 0) {
         file_output(stdin, options, &lastLineBlank, &lineNumber);
     } else {
         FILE *file = NULL;
-        for (int i = 1; i < argc; i++) {
-            if (argv[i][0] != '-') {
-                file = fopen(argv[i], "r");
-                if (file)
-                    file_output(file, options, &lastLineBlank, &lineNumber);
-                else
-                    fprintf(stderr, "s21_cat: %s: No such file or directory\n", argv[i]);
-            }
+        for (int i = 0; i < files_count; i++) {
+            file = fopen(files[i], "r");
+            if (file)
+                file_output(file, options, &lastLineBlank, &lineNumber);
+            else
+                fprintf(stderr, "s21_cat: %s: No such file or directory\n", argv[i]);
+            fclose(file);
         }
     }
 
@@ -88,14 +92,37 @@ void file_output(FILE *file, int* options, int* lastLineBlank, int* lineNumber) 
 }
 
 void get_options(int *options, int argc, char **argv) {
+
     for (int i = 0; i < 5; i++) options[i] = 0;
+
+    for (int i = 1; i < argc; i++) {
+        if (argv[i][0] == '-' && argv[i][1] == '-') {
+            if (strcmp(argv[i], "--number-nonblank") == 0) {
+                argv[i][2] = 0;
+                options[0] = 1;
+            } else if (strcmp(argv[i], "--number") == 0) {
+                argv[i][2] = 0;
+                options[2] = 1;
+            } else if (strcmp(argv[i], "--squeeze-blank") == 0) {
+                argv[i][2] = 0;
+                options[3] = 1;
+            } else {
+                fprintf(stdin, "s21_cat: invalid option -- '%s'", argv[i]);
+                exit(1);
+            }
+        }
+    }
+
     char temp;
-    while ((temp = getopt(argc, argv, "benst")) != -1) {
+    while ((temp = getopt(argc, argv, "beEnstT-")) != -1) {
         switch(temp) {
             case 'b':
                 options[0] = 1;
                 break;
             case 'e':
+                options[1] = 1;
+                break;
+            case 'E':
                 options[1] = 1;
                 break;
             case 'n':
@@ -107,9 +134,23 @@ void get_options(int *options, int argc, char **argv) {
             case 't':
                 options[4] = 1;
                 break;
+            case 'T':
+                options[4] = 1;
+                break;
+            case '-':
+                break;
             default:
                 fprintf(stdin, "s21_cat: invalid option -- '%c'", temp);
                 exit(1);
         }
     }
+}
+
+void get_files(char **files, int* n, int argc, char **argv) {
+    for (int i = 1; i < argc; i++) {
+            if (argv[i][0] != '-') {
+                files[*n] = argv[i];
+                *n += 1;
+            }
+        }
 }
