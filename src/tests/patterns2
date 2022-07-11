@@ -1,0 +1,9 @@
+a?e
+ab*c
+ab+c
+a|b*
+(a|b)*
+ab*(c|a)
+[abcx-z]
+[^abc]
+a{3,5}
