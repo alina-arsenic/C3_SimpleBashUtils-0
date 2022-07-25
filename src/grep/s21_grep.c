@@ -79,17 +79,23 @@ void file_processing(FILE *file, int files_count, char* filename, int* options,
                 line_by_line_output(buffer, filename, line_number, files_count, options);
         }
     }
-    if (options[3]) {  // -l - output matching files only
-        if (match_count) {
-            fprintf(stdout, "%s\n", filename);
+
+    if (options[2]) {  // -c - output count of matching lines only
+        if (options[3]) {
+            match_count = (match_count > 0) ? 1 : 0;
         }
-    } else if (options[2]) {  // -c - output count of matching lines only
         if (files_count == 1 || options[5]) {  // -h - suppress the prefixing of file names on output
             fprintf(stdout, "%d\n", match_count);
         } else {
             fprintf(stdout, "%s:%d\n", filename, match_count);
         }
     }
+    if (options[3]) {  // -l - output matching files only
+        if (match_count) {
+            fprintf(stdout, "%s\n", filename);
+        }
+    }
+
 }
 
 void line_by_line_output(char *buffer, char *filename, int line_number, int files_count, int *options) {
