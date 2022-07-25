@@ -4,7 +4,7 @@
 #include <unistd.h>
 #define buffer_size 4096
 
-void file_output(FILE *file, int* options, int* lastLineBlank, int* lineNumber, int *numerate_permission);
+void file_output(FILE *file, int* options);
 void get_options(int *options, int argc, char **argv);
 void get_files(char **files, int* n, int argc, char **argv);
 void numerate_line(char *line, int *lineNumber);
@@ -18,15 +18,14 @@ int main(int argc, char **argv) {
     char *files[argc];
     get_files(files, &files_count, argc, argv);
 
-    int lastLineBlank = 0, lineNumber = 1, numerate_permission = 1;
     if (files_count == 0) {
-        file_output(stdin, options, &lastLineBlank, &lineNumber, &numerate_permission);
+        file_output(stdin, options);
     } else {
         FILE *file = NULL;
         for (int i = 0; i < files_count; i++) {
             file = fopen(files[i], "r");
             if (file)
-                file_output(file, options, &lastLineBlank, &lineNumber, &numerate_permission);
+                file_output(file, options);
             else
                 fprintf(stderr, "s21_cat: %s: No such file or directory\n", argv[i]);
             fclose(file);
@@ -36,20 +35,22 @@ int main(int argc, char **argv) {
     return 0;
 }
 
-void file_output(FILE *file, int* options, int* lastLineBlank, int* lineNumber, int *numerate_permission) {
+void file_output(FILE *file, int* options) {
 
     char buffer[buffer_size];
     int length; char *tmp;
+    int lineNumber = 1;
+    int lastLineBlank = 0;
 
     while (fgets(buffer, buffer_size / 2 - 1, file)) {
 
         if (options[3]) {  // -s сжимает несколько смежных пустых строк
             length = strlen(buffer);
             int currentLineBlank = (length <= 1) ? 1 : 0;
-            if (*lastLineBlank && currentLineBlank) {
+            if (lastLineBlank && currentLineBlank) {
                 continue;
             }
-            *lastLineBlank = currentLineBlank;
+            lastLineBlank = currentLineBlank;
         }
         if (options[4]) {  // -t также отображает табы как ^I
             char rest[buffer_size]; rest[0] = 0;
@@ -68,13 +69,11 @@ void file_output(FILE *file, int* options, int* lastLineBlank, int* lineNumber, 
         }
         if (options[0]) {  // -b нумерует только непустые строки
             length = strlen(buffer);
-            if (*numerate_permission == 1 && length > 1) {
-                numerate_line(buffer, lineNumber);
+            if (length > 1) {
+                numerate_line(buffer, &lineNumber);
             }
         } else if (options[2]) {  // -n нумерует все выходные строки
-            if (*numerate_permission == 1) {
-                numerate_line(buffer, lineNumber);
-            }
+            numerate_line(buffer, &lineNumber);
         }
         if (options[1]) {  // -e также отображает символы конца строки как $
             tmp = strrchr(buffer, '\n');
@@ -86,11 +85,6 @@ void file_output(FILE *file, int* options, int* lastLineBlank, int* lineNumber, 
         }
 
         tmp = strrchr(buffer, '\n');
-        if (tmp == NULL) {
-            *numerate_permission = 0;
-        } else {
-            *numerate_permission = 1;
-        }
 
         fprintf(stdout, "%s", buffer);
     }
@@ -162,7 +156,7 @@ void get_files(char **files, int* n, int argc, char **argv) {
 
 void numerate_line(char *line, int *lineNumber) {
     char *tmp = strdup(line);
-    line[0] = '\0';
+    line[0] = 0;
     sprintf(line, "%*d\t", 6, *lineNumber);
     *lineNumber += 1;
     strcat(line, tmp);
