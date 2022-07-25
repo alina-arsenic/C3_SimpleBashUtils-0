@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-#define buffer_size 4096
+#define BufferSize 4096
 
 void file_output(FILE *file, int* options);
 void get_options(int *options, int argc, char **argv);
@@ -10,7 +10,6 @@ void get_files(char **files, int* n, int argc, char **argv);
 void numerate_line(char *line, int *lineNumber);
 
 int main(int argc, char **argv) {
-
     int options[5];
     get_options(options, argc, argv);
 
@@ -36,14 +35,12 @@ int main(int argc, char **argv) {
 }
 
 void file_output(FILE *file, int* options) {
-
-    char buffer[buffer_size];
+    char buffer[BufferSize];
     int length; char *tmp;
     int lineNumber = 1;
     int lastLineBlank = 0;
 
-    while (fgets(buffer, buffer_size / 2 - 1, file)) {
-
+    while (fgets(buffer, BufferSize / 2 - 1, file)) {
         if (options[3]) {  // -s сжимает несколько смежных пустых строк
             length = strlen(buffer);
             int currentLineBlank = (length <= 1) ? 1 : 0;
@@ -53,7 +50,7 @@ void file_output(FILE *file, int* options) {
             lastLineBlank = currentLineBlank;
         }
         if (options[4]) {  // -t также отображает табы как ^I
-            char rest[buffer_size]; rest[0] = 0;
+            char rest[BufferSize]; rest[0] = 0;
             char *tab = strchr(buffer, '\t');
             while (tab) {
                 if (tab[1]) {
@@ -91,9 +88,7 @@ void file_output(FILE *file, int* options) {
 }
 
 void get_options(int *options, int argc, char **argv) {
-
     for (int i = 0; i < 5; i++) options[i] = 0;
-
     for (int i = 1; i < argc; i++) {
         if (argv[i][0] == '-' && argv[i][1] == '-') {
             if (strcmp(argv[i], "--number-nonblank") == 0) {
@@ -114,7 +109,7 @@ void get_options(int *options, int argc, char **argv) {
 
     char temp;
     while ((temp = getopt(argc, argv, "beEnstT-")) != -1) {
-        switch(temp) {
+        switch (temp) {
             case 'b':
                 options[0] = 1;
                 break;

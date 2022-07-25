@@ -5,29 +5,29 @@
 #include <unistd.h>
 #include <regex.h>
 
-#define buffer_size 4096
-#define filename_size 128
-#define options_count 8
+#define BufferSize 4096
+#define FilenameSize 128
+#define OptionsCount 8
 
-void get_templates(int *templates_count, char templates[][filename_size], int *template_files_count, char template_files[][filename_size], int argc, char **argv);
-void cut_from_argv(char option, int i, int j, int *count, char array[][filename_size], int argc, char **argv);
+void get_templates(int *templates_count, char templates[][FilenameSize],
+                    int *template_files_count, char template_files[][FilenameSize], int argc, char **argv);
+void cut_from_argv(char option, int i, int j, int *count, char array[][FilenameSize], int argc, char **argv);
 void get_options(int *options, int argc, char **argv);
 void get_files(char **files, int *n, int argc, char **argv);
-void file_processing(FILE *file, int files_count, char* filename, int* options, 
-                    int templates_count, char templates[][filename_size],
-                    int template_files_count, char template_files[][filename_size]);
-char* pattern_searching(char *buffer, int templates_count, char templates[][filename_size],
-                    int template_files_count, char template_files[][filename_size], int *options);
+void file_processing(FILE *file, int files_count, char* filename, int* options,
+                    int templates_count, char templates[][FilenameSize],
+                    int template_files_count, char template_files[][FilenameSize]);
+char* pattern_searching(char *buffer, int templates_count, char templates[][FilenameSize],
+                    int template_files_count, char template_files[][FilenameSize], int *options);
 char* regular_searching(char *text, char *expr, int *options);
 void line_by_line_output(char *buffer, char *filename, int line_number, int files_count, int *options);
 
 int main(int argc, char **argv) {
-
     int template_files_count = 0, templates_count = 0;
-    char template_files[argc][filename_size], templates[argc][filename_size];
+    char template_files[argc][FilenameSize], templates[argc][FilenameSize];
     get_templates(&templates_count, templates, &template_files_count, template_files, argc, argv);
 
-    int options[options_count];
+    int options[OptionsCount];
     get_options(options, argc, argv);  // except -e and -f
 
     int files_count = 0;
@@ -40,13 +40,15 @@ int main(int argc, char **argv) {
     }
 
     if (files_count == 0) {  // console mode
-        file_processing(stdin, 0, 0, options, templates_count, templates, template_files_count, template_files);
+        file_processing(stdin, 0, 0, options, templates_count,
+                        templates, template_files_count, template_files);
     } else {  // file mode
         FILE *file = NULL;
         for (int i = 0; i < files_count; i++) {
             file = fopen(files[i], "r");
             if (file) {
-                file_processing(file, files_count, files[i], options, templates_count, templates, template_files_count, template_files);
+                file_processing(file, files_count, files[i], options,
+                                templates_count, templates, template_files_count, template_files);
             } else {
                 if (!options[6])  // suppress error messages about nonexistent or unreadable files
                     fprintf(stderr, "s21_grep: %s: No such file or directory\n", argv[i]);
@@ -58,16 +60,16 @@ int main(int argc, char **argv) {
     return 0;
 }
 
-void file_processing(FILE *file, int files_count, char* filename, int* options, 
-                    int templates_count, char templates[][filename_size],
-                    int template_files_count, char template_files[][filename_size]) {
-
-    char buffer[buffer_size]; int match;
+void file_processing(FILE *file, int files_count, char* filename, int* options,
+                    int templates_count, char templates[][FilenameSize],
+                    int template_files_count, char template_files[][FilenameSize]) {
+    char buffer[BufferSize]; int match;
     int line_number = 0, match_count = 0;
     char *match_part;
-    while (fgets(buffer, buffer_size, file)) {
+    while (fgets(buffer, BufferSize, file)) {
         line_number++;
-        match_part = pattern_searching(buffer, templates_count, templates, template_files_count, template_files, options);
+        match_part = pattern_searching(buffer, templates_count, templates,
+                                        template_files_count, template_files, options);
         if (match_part != NULL) {
             match = 1;
         } else {
@@ -95,11 +97,9 @@ void file_processing(FILE *file, int files_count, char* filename, int* options,
             fprintf(stdout, "%s\n", filename);
         }
     }
-
 }
 
 void line_by_line_output(char *buffer, char *filename, int line_number, int files_count, int *options) {
-
     if (!options[3] && !options[2]) {
         if (files_count == 1 || options[5]) {  // -h - suppress the prefixing of file names on output
             if (options[4]) {  // -n - precede each matching line with a line number
@@ -117,11 +117,10 @@ void line_by_line_output(char *buffer, char *filename, int line_number, int file
     }
 }
 
-char* pattern_searching(char *buffer, int templates_count, char templates[][filename_size],
-                    int template_files_count, char template_files[][filename_size], int *options) {
-
+char* pattern_searching(char *buffer, int templates_count, char templates[][FilenameSize],
+                    int template_files_count, char template_files[][FilenameSize], int *options) {
     char *result = NULL; char *temp;
-    FILE *file; char template[filename_size];
+    FILE *file; char template[FilenameSize];
 
     for (int i = 0; i < templates_count; i++) {
         result = regular_searching(buffer, templates[i], options);
@@ -132,7 +131,7 @@ char* pattern_searching(char *buffer, int templates_count, char templates[][file
     if (result == NULL) {
         for (int i = 0; i < template_files_count; i++) {
             file = fopen(template_files[i], "r");
-            while (fgets(template, filename_size, file)) {
+            while (fgets(template, FilenameSize, file)) {
                 temp = strrchr(template, '\n');
                 if (temp != NULL)
                     *temp = 0;
@@ -149,7 +148,6 @@ char* pattern_searching(char *buffer, int templates_count, char templates[][file
 }
 
 char* regular_searching(char *text, char *expr, int *options) {
-
     char *result = NULL;
     char *temp;
 
@@ -159,7 +157,7 @@ char* regular_searching(char *text, char *expr, int *options) {
 
     if (text[0] != 0) {
         regex_t regexpr;
-        char message[filename_size];
+        char message[FilenameSize];
         int error = 0;
 
         if (options[1]) {  // ignore uppercase vs. lowercase
@@ -169,16 +167,15 @@ char* regular_searching(char *text, char *expr, int *options) {
         }
 
         if (error != 0) {
-            regerror(error, &regexpr, message, filename_size);
+            regerror(error, &regexpr, message, FilenameSize);
             printf("%s\n", message);
             exit(1);
         }
 
-        if ((error = regexec(&regexpr, text, 0, NULL, 0)) == 0)
+        if ((error = regexec(&regexpr, text, 0, NULL, 0)) == 0) {
             result = text;
-
-        else if ( error != REG_NOMATCH ) {
-            regerror(error, &regexpr, message, filename_size);
+        } else if (error != REG_NOMATCH) {
+            regerror(error, &regexpr, message, FilenameSize);
             exit(1);
         }
 
@@ -188,12 +185,13 @@ char* regular_searching(char *text, char *expr, int *options) {
     return result;
 }
 
-void get_templates(int *templates_count, char templates[][filename_size], int *template_files_count, char template_files[][filename_size], int argc, char **argv) {
-
+void get_templates(int *templates_count, char templates[][FilenameSize], int *template_files_count,
+                    char template_files[][FilenameSize], int argc, char **argv) {
     int j;
     for (int i = 1; i < argc; i++) {  // templates extracting with -e and -f flags
         if (argv[i][0] == '-') {
-            for (j = 1; argv[i][j] && (argv[i][j] != 'e' && argv[i][j] != 'f'); j++);
+            for (j = 1; argv[i][j] && (argv[i][j] != 'e' && argv[i][j] != 'f'); j++)
+                {};
             if (argv[i][j] == 'e') {
                 cut_from_argv('e', i, j, templates_count, templates, argc, argv);
             } else if (argv[i][j] == 'f') {
@@ -201,7 +199,7 @@ void get_templates(int *templates_count, char templates[][filename_size], int *t
             }
         }
     }
-    if (*templates_count == 0 && *template_files_count == 0) {  // template extracting if there's no -e or -f flags
+    if (*templates_count == 0 && *template_files_count == 0) {  // if there's no -e or -f flags
         for (int i = 1; i < argc; i++) {
             if (argv[i][0] != '-' && argv[i][0] != 0) {
                 strcpy(templates[0], argv[i]);
@@ -222,8 +220,7 @@ void get_templates(int *templates_count, char templates[][filename_size], int *t
     }
 }
 
-void cut_from_argv(char option, int i, int j, int *count, char array[][filename_size], int argc, char **argv) {
-    
+void cut_from_argv(char option, int i, int j, int *count, char array[][FilenameSize], int argc, char **argv) {
     if (argv[i][j+1] == 0) {  // the template/filename is in the next argv
         if (i+1 >= argc) {  // there's no template/filename
             fprintf(stderr, "s21_grep: option requires an argument -- '%c'", option);
@@ -242,11 +239,11 @@ void cut_from_argv(char option, int i, int j, int *count, char array[][filename_
 }
 
 void get_options(int *options, int argc, char **argv) {
-    for (int i = 0; i < options_count; i++)
+    for (int i = 0; i < OptionsCount; i++)
         options[i] = 0;
     char temp;
     while ((temp = getopt(argc, argv, "viclnhsoef")) != -1) {
-        switch(temp) {
+        switch (temp) {
             case 'v':
                 options[0] = 1;
                 break;
@@ -283,7 +280,6 @@ void get_options(int *options, int argc, char **argv) {
 }
 
 void get_files(char **files, int* n, int argc, char **argv) {
-
     for (int i = 1; i < argc; i++) {
         if (argv[i][0] != '-' && argv[i][0] != 0) {
             files[*n] = argv[i];
