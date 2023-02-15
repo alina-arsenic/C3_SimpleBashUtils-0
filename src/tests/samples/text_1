@@ -1,0 +1,88 @@
+GitHub, Inc. is a provider of Internet hosting for software development and version control using Git. It offers the distributed version control and source code management (SCM) functionality of Git, plus its own features. It provides access control and several collaboration features such as bug tracking, feature requests, task management, continuous integration, and wikis for every project.[4] Headquartered in California, it has been a subsidiary of Microsoft since 2018.[5]
+
+It is commonly used to host open-source projects.[6] As of November 2021, GitHub reports having over 73 million developers[7] and more than 200 million repositories[8] (including at least 28 million public repositories).[9] It is the largest source code host as of November 2021.
+
+
+
+
+Contents
+1	History
+1.1	GitHub.com
+1.2	Organizational structure
+1.3	Finance
+1.4	Acquisition by Microsoft
+1.5	Mascot
+2	Services
+2.1	Scope
+2.2	GitHub Enterprise
+2.3	GitHub Pages
+2.4	Gist
+2.5	Education program
+2.6	GitHub Marketplace service
+2.7	GitHub Sponsors
+3	GitHub Archive Program
+4	Controversies
+4.1	Harassment allegations
+4.2	Sanctions
+4.3	Censorship
+4.4	ICE contract
+4.5	Capitol riot comments and employee firing
+5	Criticism
+6	Developed projects
+7	See also
+8	References
+9	External links
+History
+
+GitHub at AWS Summit
+GitHub.com
+Development of the GitHub.com platform began on October 19, 2007.[10][11][12] The site was launched in April 2008 by Tom Preston-Werner, Chris Wanstrath, P. J. Hyett and Scott Chacon after it had been made available for a few months prior as a beta release.[13] GitHub has an annual keynote called GitHub Universe.[14]
+
+Organizational structure
+GitHub, Inc. was originally a flat organization with no middle managers; in other words, "everyone is a manager" (self-management).[15] Employees could choose to work on projects that interested them (open allocation), but salaries were set by the chief executive.[16][needs update]
+
+In 2014, GitHub, Inc. introduced a layer of middle management amid harassment claims made against senior management. Tom Preston-Werner resigned as CEO amid the scandal.[17]
+
+Finance
+GitHub.com was a bootstrapped start-up business, which in its first years provided enough revenue to be funded solely by its three founders and start taking on employees.[18] In July 2012, four years after the company was founded, Andreessen Horowitz invested $100 million in venture capital.[4] In July 2015 GitHub raised another $250 million of venture capital in a series B round. Investors were Sequoia Capital, Andreessen Horowitz, Thrive Capital, and other venture capital funds.[19] As of 2018, GitHub was estimated to be generating $200-300 million in Annual Recurring Revenue.[1] The GitHub service was developed by Chris Wanstrath, P. J. Hyett, Tom Preston-Werner, and Scott Chacon using Ruby on Rails, and started in February 2008. The company, GitHub, Inc., has existed since 2007 and is located in San Francisco.[20]
+
+
+
+The shading of the map illustrates the number of users as a proportion of each country's Internet population. The circular charts surrounding the two hemispheres depict the total number of GitHub users (left) and commits (right) per country.
+On February 24, 2009, GitHub announced that within the first year of being online, GitHub had accumulated over 46,000 public repositories, 17,000 of which were formed in the previous month. At that time, about 6,200 repositories had been forked at least once and 4,600 had been merged.
+
+That same year, the site was used by over 100,000 users, according to GitHub, and had grown to host 90,000 unique public repositories, 12,000 having been forked at least once, for a total of 135,000 repositories.[21]
+
+In 2010, GitHub was hosting 1 million repositories.[22] A year later, this number doubled.[23] ReadWriteWeb reported that GitHub had surpassed SourceForge and Google Code in total number of commits for the period of January to May 2011.[24] On January 16, 2013, GitHub passed the 3 million users mark and was then hosting more than 5 million repositories.[25] By the end of the year, the number of repositories was twice as great, reaching 10 million repositories.[26]
+
+In 2012, GitHub raised $100 million in funding from Andreessen Horowitz with a $750 million valuation.[27] On July 29, 2015, GitHub stated it had raised $250 million in funding in a round led by Sequoia Capital. Other investors of that round included Andreessen Horowitz, Thrive Capital, and IVP (Institutional Venture Partners).[28] The round valued the company at approximately $2 billion.[29]
+
+In 2015, GitHub opened an office in Japan, its first outside of the U.S.[30] In 2016, GitHub was ranked No. 14 on the Forbes Cloud 100 list.[31] It was not featured on the 2018, 2019, and 2020 lists.[32]
+
+On February 28, 2018, GitHub fell victim to the third-largest distributed denial-of-service (DDoS) attack in history, with incoming traffic reaching a peak of about 1.35 terabits per second.[33]
+
+On June 19, 2018, GitHub expanded its GitHub Education by offering free education bundles to all schools.[34][35]
+
+Acquisition by Microsoft
+
+Microsoft on top of list of the ten organizations with the most open-source contributors on GitHub in 2016[36]
+From 2012, Microsoft became a significant user of GitHub, using it to host open-source projects and development tools such as .NET Core, Chakra Core, MSBuild, PowerShell, PowerToys, Visual Studio Code, Windows Calculator, Windows Terminal and the bulk of its product documentation (now to be found on Microsoft Docs).[37][38]
+
+On June 4, 2018, Microsoft announced its intent to acquire GitHub for US$7.5 billion. The deal closed on October 26, 2018.[39] GitHub continued to operate independently as a community, platform and business.[40] Under Microsoft, the service was led by Xamarin's Nat Friedman, reporting to Scott Guthrie, executive vice president of Microsoft Cloud and AI. GitHub's CEO, Chris Wanstrath, was retained as a "technical fellow," also reporting to Guthrie. Nat Friedman resigned November 3, 2021; replaced by Thomas Domke. [41]
+
+There have been concerns from developers Kyle Simpson, JavaScript trainer and author, and Rafael Laguna, CEO at Open-Xchange over Microsoft's purchase, citing uneasiness over Microsoft's handling of previous acquisitions, such as Nokia's mobile business or Skype.[42][43]
+
+This acquisition was in line with Microsoft's business strategy under CEO Satya Nadella, which has seen a larger focus on cloud computing services, alongside the development of and contributions to open-source software.[5][38][44] Harvard Business Review argued that Microsoft was intending to acquire GitHub to get access to its user base, so it can be used as a loss leader to encourage the use of its other development products and services.[45]
+
+Concerns over the sale bolstered interest in competitors: Bitbucket (owned by Atlassian), GitLab and SourceForge (owned by BIZX, LLC) reported that they had seen spikes in new users intending to migrate projects from GitHub to their respective services.[46][47][48][49][50]
+
+In September 2019, GitHub acquired Semmle, a code analysis tool.[51] In February 2020, GitHub launched in India under the name GitHub India Private Limited.[52] In March 2020, GitHub announced that they were acquiring npm, a JavaScript packaging vendor, for an undisclosed sum of money.[53] The deal was closed on 15 April 2020.[54]
+
+In early July 2020, the GitHub Archive Program was established, to archive its open-source code in perpetuity.[55]
+
+Mascot
+GitHub's mascot is an anthropomorphized "octocat" with five octopus-like arms.[56][57] The character was created by graphic designer Simon Oxley as clip art to sell on iStock,[58] a website that enables designers to market royalty-free digital images. GitHub became interested in Oxley's work after Twitter selected a bird that he designed for their own logo.[59] The illustration GitHub chose was a character that Oxley had named Octopuss.[58] Since GitHub wanted Octopuss for their logo (a use that the iStock license disallows), they negotiated with Oxley to buy exclusive rights to the image.[58]
+
+GitHub renamed Octopuss to Octocat,[58] and trademarked the character along with the new name.[56] Later, GitHub hired illustrator Cameron McEfee to adapt Octocat for different purposes on the website and promotional materials; McEfee and various GitHub users have since created hundreds of variations of the character, which are available on The Octodex.[60][61]
+
+
